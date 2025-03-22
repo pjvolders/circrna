@@ -31,7 +31,7 @@ columns = ['chr', 'start', 'end', 'name', 'score', 'strand',
             'readNumber', 'circType', 'gene', 'transcript',
             'index', 'flankIntron'
             ]
-df = pl.scan_csv('${bed12}', separator='\\t', has_header=False, new_columns=columns)
+df = pl.scan_csv('${bed12}', schema_overrides={"chr": pl.Utf8}, separator='\\t', has_header=False, new_columns=columns)
 
 df = df.with_columns(
     attributes = pl.lit('gene_id "') + pl.col('gene') + pl.lit('"; transcript_id "') + pl.col('name') + pl.lit('";'),
